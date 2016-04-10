@@ -6,31 +6,29 @@
 #define SEG r0
 #define DIGIT r1
 #define CURDIGIT r2//0 for MSD, 1 for LSD
-#define MSD r3
-#define LSD r4
-#define SEGSCRATCH r5
-#define SEGSET r6
 
+#define PIN_OFFSET 4
 
-#define DELAY 1000*1000*100
 SEVENSEG_DRIVER:
-
-    MOV SEG, 0
     MOV CURDIGIT, 0
 
 DISPLAYLOOP:
-    MOV SEG, 0
     MOV r10, 0
     NOT r10, r10
 
-    LBBO DIGIT, CURDIGIT, 0, 1
+    LBBO DIGIT, CURDIGIT, 0, 1 // Load digit for current digit
+    XOR CURDIGIT, CURDIGIT, 1 // switch between MSB, LSB
 
-BEFORESEGLOOP:
+    LBBO r8, CURDIGIT, PIN_OFFSET+8, 1 //read pin for not current digit common cathode
+    CLR r10, r10, r8 //Clear bit for other digit common cathode
 
-SEGLOOP:
-    LBBO r8, SEG, 2, 1
-    AND r9, DIGIT, 1
-    QBNE NOTACTIVE, r9, 1
+    MOV SEG, 0 
+SEGLOOP: // Iterate for each of the segments
+    LBBO r8, SEG, PIN_OFFSET, 1 //Get pin number for this segment
+    AND r9, DIGIT, 1 //strip lsb off of digit
+    MOV r30, r10 // clear digit
+
+    QBNE NOTACTIVE, r9, 1 // avoid showing segment if not active
     CLR r30, r10, r8
 NOTACTIVE:
 
@@ -38,8 +36,11 @@ NOTACTIVE:
     LSR DIGIT, DIGIT, 1
     QBNE SEGLOOP, SEG, 8
 
-    QBA DISPLAYLOOP
+    MOV r8, 0
+    LBBO r8, r8, 3, 1
+    QBEQ DISPLAYLOOP, r8, 0// Continue if quit flag not set
 
+    MOV R30, 0
     MOV R31.b0, PRU1_ARM_INTERRUPT
 
     HALT

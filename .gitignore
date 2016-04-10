@@ -1,0 +1,6 @@
+#Vim garbage
+*~
+
+thermometer
+*.o
+sevenseg_driver_bin.h
