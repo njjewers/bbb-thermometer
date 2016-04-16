@@ -9,7 +9,7 @@ The temperature is displayed on a cheap multiplexed common cathode 7-segment dis
 The default pin configuration is for a [Knight Lights Dual Digit Display](http://www.mainelectronics.com/KLDualDigitLED.htm) (though mine is labelled incorrectly...), but it can be remapped without having to recompile the driver.
 
 |BBB Pin | P9.31 | P9.29 | P9.30 | P9.28 | P9.42 | P9.27 | P9.41 | P9.25 |  P8.12 | P8.11 |
-|-|-|-|-|-|-|-|-|-|-|-|
+|---|---|---|---|---|---|---|---|---|---|---|
 |PRU0 Pin | r30_0 | r30_1 | r30_2 | r30_3 | r30_4 | r30_5 | r30_6 | r30_7 | r30_14 | r30_15 | 
 |KDD Pin | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 
