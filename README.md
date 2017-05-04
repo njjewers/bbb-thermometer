@@ -1,5 +1,7 @@
 # Beaglebone Black Thermometer
 
+[![Video Link](https://img.youtube.com/vi/PogKJn65is8/0.jpg)](https://www.youtube.com/watch?v=PogKJn65is8)
+
 Not a particularly impressive project, but it was a good learning experience to play around with Linux device tree overlays and the like. Hopefully other people can take some of the lessons from this project as a jumping-off point for using the PRUSS subsystems on the BeagleBone Black.
 
 Temperature input is taken from a DS18B20 one-wire thermometer through the sysfs interface.
